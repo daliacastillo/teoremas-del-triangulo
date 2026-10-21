@@ -1,0 +1,17 @@
+{
+  "title": "Teoremas del triángulo: demostraciones interactivas de Pitágoras, ley de senos, ley de cosenos y ley de tangentes, con calculadora de triángulos",
+  "upload_type": "lesson",
+  "description": "<p>Material didáctico interactivo que presenta, paso a paso y con figuras dinámicas, las demostraciones del teorema de Pitágoras (por reacomodo de áreas), la ley de senos (por alturas y circunferencia circunscrita), la ley de cosenos (por alturas y Pitágoras) y la ley de tangentes (construcción geométrica y prueba algebraica). Incluye una calculadora que resuelve triángulos rectángulos y oblicuángulos (casos LLL, LAL, ALA, LAA y LLA ambiguo) mostrando el procedimiento, los resultados, la clasificación y la figura del triángulo.</p>",
+  "creators": [
+    {
+      "name": "Castillo Márquez, Dalia Imelda",
+      "affiliation": "Universidad Autónoma de Nayarit, Unidad Académica de Ciencias Básicas e Ingenierías",
+      "orcid": "0000-0002-5890-0437"
+    }
+  ],
+  "language": "spa",
+  "license": "cc-by-nc-sa-4.0",
+  "access_right": "open",
+  "version": "1.0.0",
+  "keywords": ["trigonometría", "teorema de Pitágoras", "ley de senos", "ley de cosenos", "ley de tangentes", "resolución de triángulos", "caso ambiguo", "demostración matemática", "geometría dinámica", "material didáctico interactivo", "enseñanza de las matemáticas", "educación superior"]
+}
