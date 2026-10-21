@@ -1,0 +1,960 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Teoremas del triángulo</title>
+<meta name="author" content="Dra. Dalia Imelda Castillo Márquez">
+<meta name="description" content="Demostraciones interactivas del teorema de Pitágoras, la ley de senos, la ley de cosenos y la ley de tangentes, con calculadora para resolver triángulos.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Source+Sans+3:wght@400;600;700&family=Source+Serif+4:ital,wght@0,600;1,400;1,600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css">
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/auto-render.min.js"></script>
+<style>
+:root{
+  --bg:#f6f5f1; --panel:#ffffff; --ink:#1c2433; --muted:#5d6678; --line:#dcdfe6; --soft:#eef1f6;
+  --accent:#1f5fae; --c1:#1f5fae; --c2:#d0661a; --c3:#2b8a57; --c4:#8a3ea8;
+  --f1:rgba(31,95,174,.16); --f2:rgba(208,102,26,.20); --f3:rgba(43,138,87,.20); --f4:rgba(138,62,168,.16);
+  --tri:rgba(28,36,51,.05); --ok:#2b8a57; --bad:#b3261e;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --bg:#14171d; --panel:#1c2029; --ink:#e7eaf0; --muted:#a3abba; --line:#323846; --soft:#252a35;
+    --accent:#6ea8ff; --c1:#6ea8ff; --c2:#ff9f5a; --c3:#5fd394; --c4:#d293f0;
+    --f1:rgba(110,168,255,.20); --f2:rgba(255,159,90,.22); --f3:rgba(95,211,148,.20); --f4:rgba(210,147,240,.20);
+    --tri:rgba(231,234,240,.05); --ok:#5fd394; --bad:#ff8a80;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#14171d; --panel:#1c2029; --ink:#e7eaf0; --muted:#a3abba; --line:#323846; --soft:#252a35;
+  --accent:#6ea8ff; --c1:#6ea8ff; --c2:#ff9f5a; --c3:#5fd394; --c4:#d293f0;
+  --f1:rgba(110,168,255,.20); --f2:rgba(255,159,90,.22); --f3:rgba(95,211,148,.20); --f4:rgba(210,147,240,.20);
+  --tri:rgba(231,234,240,.05); --ok:#5fd394; --bad:#ff8a80;
+}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.55 'Source Sans 3',system-ui,sans-serif}
+.wrap{max-width:1180px;margin:0 auto;padding:0 16px}
+header{padding:28px 0 8px}
+h1{font-family:'Source Serif 4',Georgia,serif;font-weight:600;font-size:clamp(1.7rem,4vw,2.4rem);margin:0 0 4px;line-height:1.2}
+.sub{color:var(--muted);margin:0 0 6px;max-width:820px}
+.author{margin:0 0 12px;font-weight:600}
+details.indic{background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:10px 16px;margin-bottom:14px}
+details.indic summary{cursor:pointer;font-weight:600}
+details.indic ol{margin:8px 0 4px;padding-left:20px}
+nav.tabs{display:flex;gap:6px;flex-wrap:wrap;border-bottom:1px solid var(--line);margin:8px 0 18px;position:sticky;top:0;background:var(--bg);z-index:5;padding-top:8px}
+nav.tabs button{font:inherit;font-weight:600;border:1px solid var(--line);border-bottom:none;background:var(--soft);color:var(--muted);padding:8px 14px;border-radius:9px 9px 0 0;cursor:pointer}
+nav.tabs button[aria-selected="true"]{background:var(--panel);color:var(--accent);position:relative;top:1px}
+section.tab{display:none}
+section.tab.active{display:block}
+h2{font-family:'Source Serif 4',Georgia,serif;font-weight:600;font-size:1.5rem;margin:0 0 4px}
+.statement{background:var(--panel);border-left:4px solid var(--accent);border-radius:6px;padding:10px 16px;margin:8px 0 16px}
+.grid{display:grid;grid-template-columns:minmax(0,1.15fr) minmax(0,1fr);gap:18px;align-items:start}
+@media (max-width:880px){.grid{grid-template-columns:minmax(0,1fr)}}
+.card{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:14px 16px}
+.figcard{padding:8px}
+svg.fig{width:100%;height:auto;display:block;touch-action:none;user-select:none;-webkit-user-select:none}
+.figpair{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+@media (max-width:560px){.figpair{grid-template-columns:1fr}}
+.figtitle{font-weight:600;font-size:.92rem;color:var(--muted);margin:4px 6px}
+.hint{font-size:.88rem;color:var(--muted);margin:6px 8px}
+.controls{display:flex;flex-wrap:wrap;gap:10px 18px;align-items:center;margin:8px 6px}
+.controls label{font-size:.95rem;display:flex;align-items:center;gap:8px}
+input[type=range]{width:130px;accent-color:var(--accent)}
+button.btn{font:inherit;font-weight:600;border:1px solid var(--accent);background:var(--accent);color:#fff;border-radius:8px;padding:6px 12px;cursor:pointer}
+button.btn.ghost{background:transparent;color:var(--accent)}
+button.btn:disabled{opacity:.4;cursor:default}
+.stepbar{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin-bottom:10px}
+.count{margin-left:auto;color:var(--muted);font-size:.9rem}
+ol.steps{margin:0;padding-left:22px}
+ol.steps>li{display:none;padding:6px 10px;margin:0 0 6px;border-left:3px solid transparent;border-radius:4px}
+ol.steps>li.shown{display:list-item}
+ol.steps>li.current{border-left-color:var(--c2);background:var(--soft)}
+.startmsg{color:var(--muted);font-style:italic}
+.panel{margin-top:14px}
+.panel h4,.card h4{margin:0 0 6px;font-size:1rem}
+table.vals{border-collapse:collapse;width:100%;font-variant-numeric:tabular-nums}
+table.vals td,table.vals th{border-bottom:1px solid var(--line);padding:4px 6px;text-align:left}
+table.vals th{color:var(--muted);font-weight:600;font-size:.9rem}
+.eq{display:flex;justify-content:space-between;gap:10px;padding:3px 0;border-bottom:1px dashed var(--line);font-variant-numeric:tabular-nums}
+.eq span:first-child{font-family:'Source Serif 4',serif;font-style:italic}
+.eq b{font-weight:600}
+.check{margin-top:6px;font-weight:600;color:var(--ok)}
+.warn{margin-top:6px;color:var(--c2);font-size:.92rem}
+details.more{margin-top:14px;background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:10px 16px}
+details.more summary{cursor:pointer;font-weight:600}
+.katex-display{margin:.5em 0;overflow-x:auto;overflow-y:hidden}
+/* SVG */
+.tri{fill:var(--tri);stroke:var(--ink);stroke-width:2.2;stroke-linejoin:round}
+.aux{stroke:var(--c2);stroke-width:2.2;stroke-dasharray:7 5;fill:none}
+.aux3{stroke:var(--c3);stroke-width:2.2;stroke-dasharray:7 5;fill:none}
+.ext{stroke:var(--muted);stroke-width:1.4;stroke-dasharray:3 4;fill:none}
+.circ{fill:none;stroke:var(--c4);stroke-width:1.8;stroke-dasharray:5 4}
+.cline{stroke:var(--c4);stroke-width:2.2;fill:none}
+.hlline{stroke:var(--c2);stroke-width:4;fill:none;stroke-linecap:round}
+.hlline3{stroke:var(--c3);stroke-width:4;fill:none;stroke-linecap:round}
+.f1{fill:var(--f1)} .f2{fill:var(--f2)} .f3{fill:var(--f3)} .f4{fill:var(--f4)}
+.arc{fill:none;stroke:var(--muted);stroke-width:1.5}
+.arc.hl{stroke:var(--c2);stroke-width:3.2}
+.arc.hl3{stroke:var(--c3);stroke-width:3.2}
+.rm{fill:none;stroke:var(--ink);stroke-width:1.4}
+.lbl{font-family:'Source Serif 4',Georgia,serif;font-style:italic;font-size:19px;fill:var(--ink)}
+.vlbl{font-family:'Source Serif 4',Georgia,serif;font-style:italic;font-weight:600;font-size:20px;fill:var(--ink)}
+.slbl{font-family:'Source Sans 3',sans-serif;font-size:14px;fill:var(--muted)}
+.albl{font-family:'Source Serif 4',serif;font-style:italic;font-size:22px;fill:var(--ink)}
+.dot{fill:var(--ink)}
+.handle{fill:var(--accent);stroke:var(--panel);stroke-width:3;pointer-events:none}
+.hit{fill:transparent;cursor:grab}
+.sq1{fill:var(--f1);stroke:var(--c1);stroke-width:2}
+.sq2{fill:var(--f2);stroke:var(--c2);stroke-width:2}
+.sq3{fill:var(--f3);stroke:var(--c3);stroke-width:2}
+.gr1{stroke:var(--c1);stroke-opacity:.35;stroke-width:1}
+.gr2{stroke:var(--c2);stroke-opacity:.35;stroke-width:1}
+.gr3{stroke:var(--c3);stroke-opacity:.35;stroke-width:1}
+.piece{fill:var(--soft);stroke:var(--ink);stroke-width:1.6;stroke-linejoin:round}
+.bigsq{fill:none;stroke:var(--ink);stroke-width:2.4}
+/* calculadora */
+.modes{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:10px}
+.modes label{border:1px solid var(--line);border-radius:8px;padding:6px 12px;cursor:pointer;background:var(--soft)}
+.modes input{accent-color:var(--accent)}
+.fields{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;margin:10px 0}
+.fields label{display:flex;flex-direction:column;font-family:'Source Serif 4',serif;font-style:italic;font-size:1.05rem}
+.fields input{font:16px 'Source Sans 3',sans-serif;font-style:normal;padding:7px 9px;border:1px solid var(--line);border-radius:7px;background:var(--bg);color:var(--ink);width:100%}
+.fields input:disabled{opacity:.6}
+.fields small{font-family:'Source Sans 3';font-style:normal;color:var(--muted);font-size:.8rem}
+select{font:inherit;padding:6px 8px;border-radius:7px;border:1px solid var(--line);background:var(--bg);color:var(--ink);max-width:100%}
+.alert{border:1px solid var(--bad);color:var(--bad);border-radius:8px;padding:10px 12px;background:var(--soft)}
+.caso{font-weight:700;color:var(--accent);margin:0 0 6px}
+ol.calc{padding-left:22px;margin:4px 0 10px}
+ol.calc li{margin-bottom:6px}
+.sols{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:14px;margin-top:10px}
+.solfill{fill:var(--f1);fill-opacity:.55}
+.sa{stroke:var(--c1)} .sb{stroke:var(--c2)} .sc{stroke:var(--c3)}
+.side{stroke-width:4;stroke-linecap:round;fill:none}
+.ka{color:var(--c1);font-weight:600} .kb{color:var(--c2);font-weight:600} .kc{color:var(--c3);font-weight:600}
+.tag{display:inline-block;border-radius:20px;padding:1px 10px;font-size:.85rem;font-weight:600;background:var(--f1);color:var(--ink);margin:2px 4px 2px 0}
+footer{color:var(--muted);font-size:.92rem;padding:24px 0 36px;border-top:1px solid var(--line);margin-top:30px}
+footer a{color:var(--accent)}
+.creditos{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:24px}
+@media (max-width:880px){.creditos{grid-template-columns:minmax(0,1fr)}}
+.creditos h3{font-family:'Source Serif 4',Georgia,serif;font-weight:600;color:var(--ink);font-size:1.05rem;margin:0 0 8px}
+.creditos p{margin:0 0 8px}
+.orcid{display:flex;align-items:center;gap:6px;flex-wrap:wrap}
+.cita{background:var(--panel);border:1px solid var(--line);border-left:4px solid var(--accent);border-radius:6px;padding:10px 12px;color:var(--ink);overflow-wrap:anywhere}
+</style>
+</head>
+<body>
+<div class="wrap">
+<header>
+  <h1>Teoremas del triángulo</h1>
+  <p class="sub">Demostraciones interactivas del teorema de Pitágoras, la ley de senos, la ley de cosenos y la ley de tangentes, con una calculadora para resolver triángulos rectángulos y oblicuángulos.</p>
+  <p class="author">Autora: Dra. Dalia Imelda Castillo Márquez</p>
+  <details class="indic">
+    <summary>Indicaciones</summary>
+    <ol>
+      <li>Elija un teorema en las pestañas.</li>
+      <li>Arrastre los vértices (puntos de color) para cambiar la forma del triángulo; las medidas y la comprobación numérica se actualizan al instante.</li>
+      <li>Avance la demostración con «Siguiente paso». La figura resalta los elementos que se usan en cada paso.</li>
+      <li>En «Calculadora», elija el tipo de triángulo, escriba los datos conocidos y pulse «Resolver». Se muestran el procedimiento, los resultados y la figura.</li>
+      <li>Notación: el lado <i>a</i> es opuesto al ángulo <i>A</i>, el lado <i>b</i> al ángulo <i>B</i> y el lado <i>c</i> al ángulo <i>C</i>. Las longitudes de las figuras se dan en unidades arbitrarias.</li>
+    </ol>
+  </details>
+</header>
+
+<nav class="tabs" role="tablist">
+  <button role="tab" data-tab="pitagoras" aria-selected="true">Pitágoras</button>
+  <button role="tab" data-tab="senos" aria-selected="false">Ley de senos</button>
+  <button role="tab" data-tab="cosenos" aria-selected="false">Ley de cosenos</button>
+  <button role="tab" data-tab="tangentes" aria-selected="false">Ley de tangentes</button>
+  <button role="tab" data-tab="calculadora" aria-selected="false">Calculadora</button>
+</nav>
+
+<!-- ===================== PITÁGORAS ===================== -->
+<section class="tab active" id="pitagoras">
+  <h2>Teorema de Pitágoras</h2>
+  <div class="statement">En todo triángulo rectángulo, el cuadrado de la hipotenusa es igual a la suma de los cuadrados de los catetos: \[c^2 = a^2 + b^2.\]</div>
+  <div class="grid">
+    <div class="card figcard">
+      <div class="figpair">
+        <div>
+          <div class="figtitle">1. Cuadrados sobre los lados</div>
+          <svg class="fig" id="fig-pit1" viewBox="0 0 300 300" aria-label="Triángulo rectángulo con cuadrados sobre sus lados"></svg>
+        </div>
+        <div>
+          <div class="figtitle">2. Demostración por reacomodo</div>
+          <svg class="fig" id="fig-pit2" viewBox="0 0 340 340" aria-label="Cuadrado de lado a+b con cuatro triángulos"></svg>
+        </div>
+      </div>
+      <div class="controls">
+        <label>cateto <i>a</i> <input type="range" id="pit-a" min="1" max="6" step="0.5" value="3"> <span id="pit-a-v">3</span></label>
+        <label>cateto <i>b</i> <input type="range" id="pit-b" min="1" max="6" step="0.5" value="4"> <span id="pit-b-v">4</span></label>
+        <label>reacomodo <input type="range" id="pit-t" min="0" max="1" step="0.01" value="0"></label>
+        <button class="btn ghost" id="pit-anim">Animar</button>
+      </div>
+      <p class="hint">La cuadrícula tiene celdas de 1 × 1: cuente cuadritos para comprobar las áreas.</p>
+    </div>
+    <div>
+      <div class="card" id="steps-pit">
+        <div class="stepbar">
+          <button class="btn ghost" data-act="prev">◀ Anterior</button>
+          <button class="btn" data-act="next">Siguiente paso ▶</button>
+          <button class="btn ghost" data-act="all">Ver todo</button>
+          <button class="btn ghost" data-act="reset">Reiniciar</button>
+          <span class="count"></span>
+        </div>
+        <p class="startmsg">Pulse «Siguiente paso» para comenzar la demostración.</p>
+        <ol class="steps">
+          <li>Sea un triángulo rectángulo con catetos \(a\), \(b\) e hipotenusa \(c\); sus ángulos agudos cumplen \(A+B=90^\circ\). Construimos un cuadrado de lado \(a+b\). Su área es \((a+b)^2\).</li>
+          <li>Colocamos cuatro copias del triángulo en las esquinas del cuadrado. El hueco central tiene cuatro lados de longitud \(c\), y cada uno de sus ángulos mide \(180^\circ-(A+B)=90^\circ\). Por lo tanto, el hueco es un <b>cuadrado de área \(c^2\)</b>.</li>
+          <li>Calculamos el área del cuadrado grande como suma de sus partes: \[(a+b)^2 = 4\cdot\frac{ab}{2} + c^2.\]</li>
+          <li>Ahora trasladamos los triángulos (sin girarlos ni deformarlos, de modo que su área no cambia). Observe la animación: los mismos cuatro triángulos forman dos rectángulos de \(a\times b\).</li>
+          <li>Los huecos que quedan son dos cuadrados, de áreas \(a^2\) y \(b^2\). El mismo cuadrado grande se descompone ahora como \[(a+b)^2 = 4\cdot\frac{ab}{2} + a^2 + b^2.\]</li>
+          <li>Comparando los pasos 3 y 5, el área de los cuatro triángulos aparece en ambos lados y se cancela: \[c^2 = a^2 + b^2. \qquad\blacksquare\] <br>Comprobación algebraica: al desarrollar el paso 3, \(a^2+2ab+b^2 = 2ab + c^2\), de donde se obtiene el mismo resultado.</li>
+        </ol>
+      </div>
+      <div class="card panel">
+        <h4>Comprobación numérica</h4>
+        <div id="pan-pit"></div>
+      </div>
+      <details class="more">
+        <summary>Preguntas para la clase</summary>
+        <ol>
+          <li>¿Por qué es indispensable que los triángulos solo se <i>trasladen</i> durante el reacomodo?</li>
+          <li>Coloque \(a=b\). ¿Qué tipo de triángulo se obtiene y qué relación aparece entre el lado de un cuadrado y su diagonal?</li>
+          <li>¿Cómo justificaría que el hueco central del paso 2 es un cuadrado y no solo un rombo?</li>
+        </ol>
+      </details>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== LEY DE SENOS ===================== -->
+<section class="tab" id="senos">
+  <h2>Ley de senos</h2>
+  <div class="statement">En todo triángulo, los lados son proporcionales a los senos de los ángulos opuestos: \[\frac{a}{\sen A}=\frac{b}{\sen B}=\frac{c}{\sen C}=2R,\] donde \(R\) es el radio de la circunferencia circunscrita.</div>
+  <div class="grid">
+    <div class="card figcard">
+      <svg class="fig" id="fig-senos" viewBox="0 0 540 440" aria-label="Triángulo para la ley de senos"></svg>
+      <p class="hint">Arrastre los vértices <i>A</i>, <i>B</i> y <i>C</i>. Pruebe un triángulo con un ángulo obtuso.</p>
+    </div>
+    <div>
+      <div class="card" id="steps-sen">
+        <div class="stepbar">
+          <button class="btn ghost" data-act="prev">◀ Anterior</button>
+          <button class="btn" data-act="next">Siguiente paso ▶</button>
+          <button class="btn ghost" data-act="all">Ver todo</button>
+          <button class="btn ghost" data-act="reset">Reiniciar</button>
+          <span class="count"></span>
+        </div>
+        <p class="startmsg">Pulse «Siguiente paso» para comenzar la demostración.</p>
+        <ol class="steps">
+          <li>Trazamos la altura \(h\) desde el vértice \(C\) hasta la recta \(AB\); su pie es \(H\). Se forman dos triángulos rectángulos: \(AHC\) y \(BHC\).</li>
+          <li>En el triángulo rectángulo \(AHC\), \(h\) es el cateto opuesto al ángulo \(A\) y \(b\) es la hipotenusa: \[\sen A=\frac{h}{b}\quad\Longrightarrow\quad h=b\,\sen A.\]</li>
+          <li>En el triángulo rectángulo \(BHC\): \[\sen B=\frac{h}{a}\quad\Longrightarrow\quad h=a\,\sen B.\] Si \(B\) es obtuso, \(H\) cae fuera del lado \(AB\) y el ángulo del triángulo \(BHC\) en \(B\) es \(180^\circ-B\); como \(\sen(180^\circ-B)=\sen B\), la igualdad se conserva.</li>
+          <li>Las dos expresiones representan la misma altura, así que \(b\,\sen A=a\,\sen B\). Dividiendo entre \(\sen A\,\sen B\): \[\frac{a}{\sen A}=\frac{b}{\sen B}.\]</li>
+          <li>Repetimos el razonamiento con la altura \(h'\) trazada desde \(A\) (en verde): \(h'=c\,\sen B=b\,\sen C\), es decir, \(\dfrac{b}{\sen B}=\dfrac{c}{\sen C}\). Por lo tanto: \[\frac{a}{\sen A}=\frac{b}{\sen B}=\frac{c}{\sen C}.\]</li>
+          <li><b>Significado de la razón común.</b> Sea \(BB'\) un diámetro de la circunferencia circunscrita (\(BB'=2R\)). El ángulo inscrito \(B'\) abarca el mismo arco \(BC\) que el ángulo \(A\), por lo que \(\sen B'=\sen A\) (son iguales o suplementarios). Además \(\angle BCB'=90^\circ\) por estar inscrito en una semicircunferencia. Así, \(\sen A=\dfrac{a}{2R}\), y la razón común es \(2R\). \(\blacksquare\)</li>
+        </ol>
+      </div>
+      <div class="card panel">
+        <h4>Medidas y comprobación</h4>
+        <div id="pan-sen"></div>
+      </div>
+      <details class="more">
+        <summary>Preguntas para la clase</summary>
+        <ol>
+          <li>Arrastre \(C\) hasta que \(B\) sea obtuso. ¿Dónde cae \(H\)? ¿Sigue cumpliéndose \(h=a\,\sen B\)? ¿Por qué?</li>
+          <li>Si conoce \(\sen B = 0.8\), ¿cuántos valores de \(B\) entre \(0^\circ\) y \(180^\circ\) son posibles? ¿Qué consecuencia tiene esto al resolver triángulos?</li>
+          <li>¿Qué ocurre con la razón \(a/\sen A\) cuando el triángulo crece sin cambiar de forma?</li>
+        </ol>
+      </details>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== LEY DE COSENOS ===================== -->
+<section class="tab" id="cosenos">
+  <h2>Ley de cosenos</h2>
+  <div class="statement">En todo triángulo: \[a^2=b^2+c^2-2bc\cos A,\quad b^2=a^2+c^2-2ac\cos B,\quad c^2=a^2+b^2-2ab\cos C.\]</div>
+  <div class="grid">
+    <div class="card figcard">
+      <svg class="fig" id="fig-cos" viewBox="0 0 540 440" aria-label="Triángulo para la ley de cosenos"></svg>
+      <p class="hint">Arrastre los vértices. Haga el ángulo <i>A</i> obtuso y observe el signo de <i>x</i>.</p>
+    </div>
+    <div>
+      <div class="card" id="steps-cos">
+        <div class="stepbar">
+          <button class="btn ghost" data-act="prev">◀ Anterior</button>
+          <button class="btn" data-act="next">Siguiente paso ▶</button>
+          <button class="btn ghost" data-act="all">Ver todo</button>
+          <button class="btn ghost" data-act="reset">Reiniciar</button>
+          <span class="count"></span>
+        </div>
+        <p class="startmsg">Pulse «Siguiente paso» para comenzar la demostración.</p>
+        <ol class="steps">
+          <li>Trazamos la altura \(h\) desde \(C\) hasta la recta \(AB\), con pie \(H\). Llamamos \(x=AH\), medida con signo sobre la recta \(AB\) (positiva hacia \(B\), negativa si \(H\) queda del otro lado de \(A\)). Entonces \(HB=c-x\).</li>
+          <li>En el triángulo rectángulo \(AHC\): \[x=b\cos A,\qquad h^2=b^2-x^2\ \text{(Pitágoras)}.\]</li>
+          <li>En el triángulo rectángulo \(BHC\), también por Pitágoras: \[a^2=h^2+(c-x)^2.\]</li>
+          <li>Sustituimos \(h^2\) y desarrollamos el binomio: \[a^2=b^2-x^2+c^2-2cx+x^2=b^2+c^2-2cx.\] Los términos \(x^2\) se cancelan.</li>
+          <li>Como \(x=b\cos A\): \[a^2=b^2+c^2-2bc\cos A.\] Las otras dos fórmulas se obtienen igual, trazando la altura desde otro vértice. \(\blacksquare\)</li>
+          <li><b>Relación con Pitágoras.</b> Si \(A=90^\circ\), \(\cos A=0\) y la fórmula se reduce a \(a^2=b^2+c^2\). Si \(A\) es agudo, \(\cos A&gt;0\) y \(a^2&lt;b^2+c^2\); si \(A\) es obtuso, \(\cos A&lt;0\) y \(a^2&gt;b^2+c^2\). El término \(-2bc\cos A\) es la «corrección» al teorema de Pitágoras.</li>
+        </ol>
+      </div>
+      <div class="card panel">
+        <h4>Medidas y comprobación</h4>
+        <div id="pan-cos"></div>
+      </div>
+      <details class="more">
+        <summary>Preguntas para la clase</summary>
+        <ol>
+          <li>Lleve \(A\) cerca de \(90^\circ\). ¿Qué valor toma el término \(2bc\cos A\)?</li>
+          <li>¿Qué signo tiene \(x\) cuando \(A\) es obtuso? ¿Por qué la demostración sigue siendo válida?</li>
+          <li>Con la ley de cosenos, ¿cómo decidiría, conociendo solo los tres lados, si un triángulo es acutángulo, rectángulo u obtusángulo?</li>
+        </ol>
+      </details>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== LEY DE TANGENTES ===================== -->
+<section class="tab" id="tangentes">
+  <h2>Ley de tangentes</h2>
+  <div class="statement">En todo triángulo: \[\frac{a-b}{a+b}=\frac{\tan\frac{A-B}{2}}{\tan\frac{A+B}{2}}\] (y análogamente para los pares \(b,c\) y \(a,c\)). Equivalentemente, si \(b>a\): \(\dfrac{b-a}{b+a}=\dfrac{\tan\frac{B-A}{2}}{\tan\frac{A+B}{2}}\).</div>
+  <div class="grid">
+    <div class="card figcard">
+      <svg class="fig" id="fig-tan" viewBox="0 0 560 500" aria-label="Construcción geométrica de la ley de tangentes"></svg>
+      <p class="hint">La demostración geométrica supone <i>b</i> &gt; <i>a</i>. Si arrastra los vértices de modo que <i>a</i> &gt; <i>b</i>, la construcción intercambia los papeles de <i>A</i> y <i>B</i>.</p>
+    </div>
+    <div>
+      <div class="card" id="steps-tan">
+        <div class="stepbar">
+          <button class="btn ghost" data-act="prev">◀ Anterior</button>
+          <button class="btn" data-act="next">Siguiente paso ▶</button>
+          <button class="btn ghost" data-act="all">Ver todo</button>
+          <button class="btn ghost" data-act="reset">Reiniciar</button>
+          <span class="count"></span>
+        </div>
+        <p class="startmsg">Pulse «Siguiente paso» para comenzar la demostración geométrica.</p>
+        <ol class="steps">
+          <li>Supongamos \(b>a\). Trazamos la circunferencia de centro \(C\) y radio \(a=CB\). Corta a la recta \(CA\) en \(D\) (sobre el lado \(CA\)) y en \(E\) (en la prolongación de \(AC\) más allá de \(C\)). Entonces \[AD=b-a,\qquad AE=b+a,\qquad ED=2a.\]</li>
+          <li>Como \(DE\) es un diámetro, el ángulo inscrito \(\angle DBE\) es recto (teorema de Tales): \(\angle DBE=90^\circ\).</li>
+          <li>El triángulo \(CDB\) es isósceles (\(CD=CB=a\)), así que \[\angle CDB=\angle CBD=\frac{180^\circ-C}{2}=\frac{A+B}{2}.\] En consecuencia, \(\angle DBA=B-\dfrac{A+B}{2}=\dfrac{B-A}{2}\).</li>
+          <li>Desde \(A\) trazamos la perpendicular \(AF\) a la recta \(EB\). Como \(AF\perp EB\) y \(DB\perp EB\), se tiene \(AF\parallel DB\), y por ser ángulos alternos internos: \(\angle BAF=\angle DBA=\dfrac{B-A}{2}\).</li>
+          <li>En los triángulos rectángulos \(DBE\) (recto en \(B\)) y \(AFB\) (recto en \(F\)): \[\tan\frac{A+B}{2}=\frac{BE}{BD},\qquad \tan\frac{B-A}{2}=\frac{BF}{AF}.\]</li>
+          <li>Por el teorema de Tales (rectas \(DB\parallel AF\) cortadas desde \(E\)): \[\frac{BD}{AF}=\frac{EB}{EF}=\frac{ED}{EA}=\frac{2a}{a+b},\] y por lo tanto \[\frac{BF}{BE}=\frac{EF-EB}{EB}=\frac{a+b}{2a}-1=\frac{b-a}{2a}.\]</li>
+          <li>Dividimos las tangentes del paso 5 y usamos el paso 6: \[\begin{aligned}\frac{\tan\frac{B-A}{2}}{\tan\frac{A+B}{2}}&=\frac{BF}{AF}\cdot\frac{BD}{BE}=\frac{BF}{BE}\cdot\frac{BD}{AF}\\&=\frac{b-a}{2a}\cdot\frac{2a}{a+b}=\frac{b-a}{b+a}.\ \blacksquare\end{aligned}\]</li>
+        </ol>
+      </div>
+      <div class="card panel">
+        <h4>Medidas y comprobación</h4>
+        <div id="pan-tan"></div>
+      </div>
+      <details class="more">
+        <summary>Demostración algebraica (a partir de la ley de senos)</summary>
+        <p>Por la ley de senos, \(a=2R\sen A\) y \(b=2R\sen B\). Entonces</p>
+        \[\frac{a-b}{a+b}=\frac{\sen A-\sen B}{\sen A+\sen B}.\]
+        <p>Con las identidades de suma a producto, \(\sen A-\sen B=2\cos\frac{A+B}{2}\sen\frac{A-B}{2}\) y \(\sen A+\sen B=2\sen\frac{A+B}{2}\cos\frac{A-B}{2}\):</p>
+        \[\frac{a-b}{a+b}=\frac{\cos\frac{A+B}{2}\,\sen\frac{A-B}{2}}{\sen\frac{A+B}{2}\,\cos\frac{A-B}{2}}=\frac{\tan\frac{A-B}{2}}{\tan\frac{A+B}{2}}.\ \blacksquare\]
+      </details>
+      <details class="more">
+        <summary>Preguntas para la clase</summary>
+        <ol>
+          <li>¿Qué dice la ley de tangentes cuando \(a=b\)? Compruébelo en la figura.</li>
+          <li>Si se conocen \(a\), \(b\) y \(C\) (caso LAL), ¿cómo permite la ley de tangentes obtener \(A-B\) sin calcular primero el lado \(c\)? (Sugerencia: \(\frac{A+B}{2}=90^\circ-\frac{C}{2}\).)</li>
+          <li>¿Por qué esta ley era muy usada cuando los cálculos se hacían con tablas de logaritmos?</li>
+        </ol>
+      </details>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== CALCULADORA ===================== -->
+<section class="tab" id="calculadora">
+  <h2>Calculadora de triángulos</h2>
+  <div class="statement" id="calc-help">Escriba los datos conocidos y deje vacíos los que desea calcular. Ángulos en grados (se aceptan decimales).</div>
+  <div class="grid">
+    <div class="card">
+      <div class="modes">
+        <label><input type="radio" name="modo" value="rect" checked> Triángulo rectángulo</label>
+        <label><input type="radio" name="modo" value="obl"> Cualquier triángulo (oblicuángulo)</label>
+      </div>
+      <div class="fields">
+        <label><span>a</span><input id="in-a" inputmode="decimal" autocomplete="off"><small id="sm-a">cateto</small></label>
+        <label><span>b</span><input id="in-b" inputmode="decimal" autocomplete="off"><small id="sm-b">cateto</small></label>
+        <label><span>c</span><input id="in-c" inputmode="decimal" autocomplete="off"><small id="sm-c">hipotenusa</small></label>
+        <label><span>A (°)</span><input id="in-A" inputmode="decimal" autocomplete="off"><small id="sm-A">agudo</small></label>
+        <label><span>B (°)</span><input id="in-B" inputmode="decimal" autocomplete="off"><small id="sm-B">agudo</small></label>
+        <label><span>C (°)</span><input id="in-C" inputmode="decimal" autocomplete="off"><small id="sm-C">ángulo recto</small></label>
+      </div>
+      <div class="controls" style="margin-left:0">
+        <button class="btn" id="calc-go">Resolver</button>
+        <button class="btn ghost" id="calc-clear">Limpiar</button>
+        <select id="calc-ej" aria-label="Ejemplos"></select>
+      </div>
+      <details class="more">
+        <summary>¿Qué ley se usa en cada caso?</summary>
+        <table class="vals">
+          <tr><th>Datos</th><th>Estrategia</th></tr>
+          <tr><td>Rectángulo: dos lados</td><td>Pitágoras y razones trigonométricas</td></tr>
+          <tr><td>Rectángulo: un lado y un ángulo agudo</td><td>Razones trigonométricas (sen, cos, tan)</td></tr>
+          <tr><td>LLL: tres lados</td><td>Ley de cosenos (dos veces) y suma de ángulos</td></tr>
+          <tr><td>LAL: dos lados y el ángulo comprendido</td><td>Ley de cosenos, después ley de cosenos o de senos</td></tr>
+          <tr><td>ALA o LAA: un lado y dos ángulos</td><td>Suma de ángulos y ley de senos</td></tr>
+          <tr><td>LLA: dos lados y un ángulo no comprendido</td><td>Ley de senos; <b>caso ambiguo</b>: 0, 1 o 2 soluciones</td></tr>
+          <tr><td>AAA: tres ángulos</td><td>No determina el triángulo (infinitos triángulos semejantes)</td></tr>
+        </table>
+      </details>
+    </div>
+    <div class="card" id="calc-out">
+      <p class="startmsg">Aquí aparecerán el procedimiento, los resultados y la figura del triángulo.</p>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="creditos">
+    <div>
+      <h3>Créditos</h3>
+      <p><b>Diseño, contenido y desarrollo:</b><br>Dra. Dalia Imelda Castillo Márquez</p>
+      <p class="orcid"><svg viewBox="0 0 256 256" width="18" height="18" aria-hidden="true"><circle cx="128" cy="128" r="128" fill="#A6CE39"/><g fill="#fff"><rect x="71" y="99" width="17" height="91"/><circle cx="79.5" cy="76" r="11"/><path d="M107 99h44c32 0 46 23 46 45.5S179 190 151 190h-44zm17 76h26c27 0 33-20 33-30.5S176 114 150 114h-26z"/></g></svg>
+        ORCID: <a href="https://orcid.org/0000-0002-5890-0437" rel="author">0000-0002-5890-0437</a></p>
+      <p>Versión 1.0 · 2026<br>DOI: <a href="https://doi.org/10.5281/zenodo.23540537">10.5281/zenodo.23540537</a></p>
+    </div>
+    <div>
+      <h3>Licencia</h3>
+      <p><a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.es" rel="license"><img src="https://licensebuttons.net/l/by-nc-sa/4.0/88x31.png" alt="Licencia Creative Commons BY-NC-SA 4.0" width="88" height="31"></a></p>
+      <p>Esta obra está bajo una licencia <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.es" rel="license">Creative Commons Atribución-NoComercial-CompartirIgual 4.0 Internacional</a>. Puede copiarla, adaptarla y compartirla citando a la autora, sin fines comerciales y bajo la misma licencia.</p>
+    </div>
+    <div>
+      <h3>Cómo citar este trabajo</h3>
+      <p class="cita" id="cita-apa">Castillo Márquez, D. I. (2026). <i>Teoremas del triángulo: demostraciones interactivas de Pitágoras, ley de senos, ley de cosenos y ley de tangentes, con calculadora de triángulos</i> (Versión 1.0) [Material didáctico interactivo]. Zenodo. <a href="https://doi.org/10.5281/zenodo.23540537">https://doi.org/10.5281/zenodo.23540537</a></p>
+      <button class="btn ghost" id="copiar-cita" type="button">Copiar cita (APA 7)</button>
+      <span id="cita-ok" class="hint" aria-live="polite"></span>
+    </div>
+  </div>
+</footer>
+</div>
+
+<script>
+/* ============ utilidades ============ */
+const $ = s => document.querySelector(s);
+const NS = 'http://www.w3.org/2000/svg';
+const UNIT = 50;                         // píxeles por unidad en las figuras arrastrables
+const rad = d => d * Math.PI / 180, deg = r => r * 180 / Math.PI;
+const sind = x => Math.sin(rad(x)), cosd = x => Math.cos(rad(x)), tand = x => Math.tan(rad(x));
+const clamp1 = x => Math.max(-1, Math.min(1, x));
+const asind = x => deg(Math.asin(clamp1(x))), acosd = x => deg(Math.acos(clamp1(x)));
+function fmt(x, n = 4){ if (!isFinite(x)) return '—'; let s = (Math.abs(x) < 1e-12 ? 0 : x).toFixed(n); if (s.includes('.')) s = s.replace(/0+$/, '').replace(/\.$/, ''); if (s === '-0') s = '0'; return s; }
+const f2 = x => fmt(x, 2), f1 = x => fmt(x, 1);
+
+const V = {
+  sub:(p,q)=>({x:p.x-q.x,y:p.y-q.y}), add:(p,q)=>({x:p.x+q.x,y:p.y+q.y}), mul:(p,k)=>({x:p.x*k,y:p.y*k}),
+  len:p=>Math.hypot(p.x,p.y), dist:(p,q)=>Math.hypot(p.x-q.x,p.y-q.y), dot:(p,q)=>p.x*q.x+p.y*q.y,
+  unit:p=>{const l=Math.hypot(p.x,p.y)||1;return {x:p.x/l,y:p.y/l}}, mid:(p,q)=>({x:(p.x+q.x)/2,y:(p.y+q.y)/2}),
+  perp:p=>({x:-p.y,y:p.x})
+};
+function angleAt(P,Q,R){ const u=V.sub(P,Q), v=V.sub(R,Q); return deg(Math.acos(clamp1(V.dot(u,v)/(V.len(u)*V.len(v))))); }
+function foot(P,U,W){ const d=V.sub(W,U); const t=V.dot(V.sub(P,U),d)/V.dot(d,d); return V.add(U,V.mul(d,t)); }
+function param(P,U,W){ const d=V.sub(W,U); return V.dot(V.sub(P,U),d)/V.dot(d,d); }
+function circumcenter(A,B,C){
+  const d=2*(A.x*(B.y-C.y)+B.x*(C.y-A.y)+C.x*(A.y-B.y));
+  const a2=A.x*A.x+A.y*A.y, b2=B.x*B.x+B.y*B.y, c2=C.x*C.x+C.y*C.y;
+  return {x:(a2*(B.y-C.y)+b2*(C.y-A.y)+c2*(A.y-B.y))/d, y:(a2*(C.x-B.x)+b2*(A.x-C.x)+c2*(B.x-A.x))/d};
+}
+
+/* ============ SVG ============ */
+function el(tag, attrs = {}, parent){ const e=document.createElementNS(NS,tag); for (const k in attrs) e.setAttribute(k, attrs[k]); if (parent) parent.appendChild(e); return e; }
+const poly = pts => pts.map(p => p.x.toFixed(2)+','+p.y.toFixed(2)).join(' ');
+function line(g,P,Q,cls){ return el('line',{x1:P.x,y1:P.y,x2:Q.x,y2:Q.y,class:cls},g); }
+function text(g,P,s,cls='lbl'){ const t=el('text',{x:P.x,y:P.y,class:cls,'text-anchor':'middle','dominant-baseline':'central'},g); t.textContent=s; return t; }
+function dot(g,P,r=3.5){ el('circle',{cx:P.x,cy:P.y,r,class:'dot'},g); }
+function arc(g,Q,P,R,r,cls='arc'){
+  const t1=Math.atan2(P.y-Q.y,P.x-Q.x), t2=Math.atan2(R.y-Q.y,R.x-Q.x);
+  let d=t2-t1; while(d<=-Math.PI) d+=2*Math.PI; while(d>Math.PI) d-=2*Math.PI;
+  const s={x:Q.x+r*Math.cos(t1),y:Q.y+r*Math.sin(t1)}, e={x:Q.x+r*Math.cos(t1+d),y:Q.y+r*Math.sin(t1+d)};
+  el('path',{d:`M${s.x} ${s.y} A${r} ${r} 0 0 ${d>0?1:0} ${e.x} ${e.y}`,class:cls},g);
+  return {x:Q.x+(r+14)*Math.cos(t1+d/2), y:Q.y+(r+14)*Math.sin(t1+d/2)};
+}
+function rightMark(g,Q,P1,P2,s=12){
+  const u=V.unit(V.sub(P1,Q)), v=V.unit(V.sub(P2,Q));
+  const p1=V.add(Q,V.mul(u,s)), p2=V.add(p1,V.mul(v,s)), p3=V.add(Q,V.mul(v,s));
+  el('path',{d:`M${p1.x} ${p1.y} L${p2.x} ${p2.y} L${p3.x} ${p3.y}`,class:'rm'},g);
+}
+function extendIfOutside(g,H,U,W){ const t=param(H,U,W); if (t<0) line(g,U,H,'ext'); else if (t>1) line(g,W,H,'ext'); }
+function labelOff(P, away, d=18){ return V.add(P, V.mul(V.unit(V.sub(P,away)), d)); }
+function segLabel(g,P,Q,away,s,cls='lbl',d=15){ const m=V.mid(P,Q); let n=V.unit(V.perp(V.sub(Q,P))); if (V.dot(n,V.sub(away,m))>0) n=V.mul(n,-1); text(g,V.add(m,V.mul(n,d)),s,cls); }
+function triLabels(g,P,hl={}){
+  const {A,B,C}=P; const G={x:(A.x+B.x+C.x)/3,y:(A.y+B.y+C.y)/3};
+  arc(g,A,B,C,24,'arc'+(hl.A?' '+hl.A:'')); arc(g,B,C,A,24,'arc'+(hl.B?' '+hl.B:'')); arc(g,C,A,B,24,'arc'+(hl.C?' '+hl.C:''));
+  segLabel(g,B,C,A,'a'); segLabel(g,C,A,B,'b'); segLabel(g,A,B,C,'c');
+  text(g,labelOff(A,G,20),'A','vlbl'); text(g,labelOff(B,G,20),'B','vlbl'); text(g,labelOff(C,G,20),'C','vlbl');
+}
+function drawHandles(svg,P){
+  for (const k of Object.keys(P)){
+    el('circle',{cx:P[k].x,cy:P[k].y,r:8,class:'handle'},svg);
+    el('circle',{cx:P[k].x,cy:P[k].y,r:20,class:'hit','data-key':k},svg);
+  }
+}
+function svgPoint(svg,e){ const pt=svg.createSVGPoint(); pt.x=e.clientX; pt.y=e.clientY; return pt.matrixTransform(svg.getScreenCTM().inverse()); }
+function okTriangle(P){ const {A,B,C}=P; return Math.min(angleAt(B,A,C),angleAt(A,B,C),angleAt(A,C,B))>5 && Math.min(V.dist(A,B),V.dist(B,C),V.dist(C,A))>40; }
+function makeDraggable(svg,P,redraw){
+  let key=null;
+  svg.addEventListener('pointerdown',e=>{ const k=e.target.getAttribute && e.target.getAttribute('data-key'); if(!k) return; key=k; svg.setPointerCapture(e.pointerId); e.preventDefault(); });
+  svg.addEventListener('pointermove',e=>{
+    if(!key) return; const p=svgPoint(svg,e), vb=svg.viewBox.baseVal;
+    const np={x:Math.max(vb.x+16,Math.min(vb.x+vb.width-16,p.x)), y:Math.max(vb.y+16,Math.min(vb.y+vb.height-16,p.y))};
+    const old=P[key]; P[key]=np; if(!okTriangle(P)){ P[key]=old; return; } redraw();
+  });
+  const end=()=>{ key=null; }; svg.addEventListener('pointerup',end); svg.addEventListener('pointercancel',end);
+}
+function eq(label,val){ return `<div class="eq"><span>${label}</span><b>${val}</b></div>`; }
+function measures(P){
+  const {A,B,C}=P;
+  return {a:V.dist(B,C)/UNIT,b:V.dist(C,A)/UNIT,c:V.dist(A,B)/UNIT,A:angleAt(B,A,C),B:angleAt(A,B,C),C:angleAt(A,C,B)};
+}
+function measTable(m){
+  return `<table class="vals"><tr><td><i>a</i> = ${f2(m.a)}</td><td><i>b</i> = ${f2(m.b)}</td><td><i>c</i> = ${f2(m.c)}</td></tr>
+  <tr><td><i>A</i> = ${f1(m.A)}°</td><td><i>B</i> = ${f1(m.B)}°</td><td><i>C</i> = ${f1(m.C)}°</td></tr></table>`;
+}
+
+/* ============ KaTeX ============ */
+const KOPT = { delimiters:[{left:'\\[',right:'\\]',display:true},{left:'\\(',right:'\\)',display:false}], macros:{'\\sen':'\\operatorname{sen}'}, throwOnError:false };
+function tex(node){ if (window.renderMathInElement) renderMathInElement(node, KOPT); }
+
+/* ============ pasos ============ */
+function setupSteps(id,onStep){
+  const box=document.getElementById(id), items=[...box.querySelectorAll('ol.steps > li')], n=items.length;
+  const cnt=box.querySelector('.count'), start=box.querySelector('.startmsg');
+  let i=0;
+  function show(){
+    items.forEach((li,k)=>{ li.classList.toggle('shown',k<i); li.classList.toggle('current',k===i-1); });
+    start.style.display = i===0 ? '' : 'none';
+    cnt.textContent = `Paso ${i} de ${n}`;
+    box.querySelector('[data-act=prev]').disabled = i===0;
+    box.querySelector('[data-act=next]').disabled = i===n;
+    onStep(i);
+    if (i>0) items[i-1].scrollIntoView({block:'nearest',behavior:'smooth'});
+  }
+  box.querySelector('.stepbar').addEventListener('click',e=>{
+    const a=e.target.dataset.act; if(!a) return;
+    if(a==='prev'&&i>0) i--; if(a==='next'&&i<n) i++; if(a==='all') i=n; if(a==='reset') i=0; show();
+  });
+  show();
+}
+
+/* ============ PITÁGORAS ============ */
+const PIT={a:3,b:4,t:0,step:0,anim:null};
+function gridSquare(g,P0,u,v,L,k,cls){ // cuadrado con vértice P0, ejes unitarios u,v, lado L px, celda k px
+  for(let s=k; s<L-0.5; s+=k){
+    line(g,V.add(P0,V.mul(u,s)),V.add(V.add(P0,V.mul(u,s)),V.mul(v,L)),cls);
+    line(g,V.add(P0,V.mul(v,s)),V.add(V.add(P0,V.mul(v,s)),V.mul(u,L)),cls);
+  }
+}
+function drawPit1(){
+  const svg=$('#fig-pit1'); svg.innerHTML=''; const g=el('g',{},svg);
+  const k=22, a=PIT.a*k, b=PIT.b*k, c=Math.hypot(a,b);
+  const C={x:0,y:0}, A={x:b,y:0}, B={x:0,y:-a};
+  const sqb=[C,A,{x:b,y:b},{x:0,y:b}], sqa=[C,B,{x:-a,y:-a},{x:-a,y:0}], n={x:a,y:-b}, sqc=[A,B,V.add(B,n),V.add(A,n)];
+  const all=[...sqa,...sqb,...sqc]; const xs=all.map(p=>p.x), ys=all.map(p=>p.y);
+  const pad=26, minx=Math.min(...xs)-pad, miny=Math.min(...ys)-pad, w=Math.max(...xs)-minx+pad, h=Math.max(...ys)-miny+pad;
+  svg.setAttribute('viewBox',`${minx} ${miny} ${w} ${h}`);
+  const hl = PIT.step===6;
+  el('polygon',{points:poly(sqa),class:'sq1'},g); gridSquare(g,C,{x:0,y:-1},{x:-1,y:0},a,k,'gr1');
+  el('polygon',{points:poly(sqb),class:'sq2'},g); gridSquare(g,C,{x:1,y:0},{x:0,y:1},b,k,'gr2');
+  el('polygon',{points:poly(sqc),class:'sq3'},g); gridSquare(g,A,V.unit(V.sub(B,A)),V.unit(n),c,k,'gr3');
+  el('polygon',{points:poly([A,B,C]),class:'tri'},g);
+  rightMark(g,C,A,B,10);
+  const fs=Math.max(13,Math.min(20,w/16));
+  const t1=text(g,{x:-a/2,y:-a/2},'a² = '+fmt(PIT.a**2,2),'slbl'); t1.setAttribute('style',`font-size:${fs}px;font-weight:600;fill:var(--c1)`);
+  const t2=text(g,{x:b/2,y:b/2},'b² = '+fmt(PIT.b**2,2),'slbl'); t2.setAttribute('style',`font-size:${fs}px;font-weight:600;fill:var(--c2)`);
+  const cc=V.add(V.mid(A,B),V.mul(n,.5)); const t3=text(g,cc,'c² = '+fmt(PIT.a**2+PIT.b**2,2),'slbl'); t3.setAttribute('style',`font-size:${fs}px;font-weight:600;fill:var(--c3)`);
+  segLabel(g,C,B,{x:-a,y:0},'a','lbl',11); segLabel(g,C,A,{x:0,y:b},'b','lbl',11); segLabel(g,A,B,C,'c','lbl',12);
+}
+function drawPit2(){
+  const svg=$('#fig-pit2'); svg.innerHTML=''; const g=el('g',{},svg);
+  const a=PIT.a, b=PIT.b, s=a+b, t=PIT.t, k=290/s, o=25;
+  const X=p=>({x:o+p.x*k, y:o+290-p.y*k});
+  const P=pts=>poly(pts.map(X));
+  const inner=[{x:a,y:0},{x:s,y:a},{x:b,y:s},{x:0,y:b}];
+  el('polygon',{points:P(inner),class:'sq3','fill-opacity':1,'opacity':(1-t).toFixed(3)},g);
+  el('polygon',{points:P([{x:0,y:0},{x:a,y:0},{x:a,y:a},{x:0,y:a}]),class:'sq1',opacity:t.toFixed(3)},g);
+  el('polygon',{points:P([{x:a,y:a},{x:s,y:a},{x:s,y:s},{x:a,y:s}]),class:'sq2',opacity:t.toFixed(3)},g);
+  const T=[
+    {p:[{x:0,y:0},{x:a,y:0},{x:0,y:b}], d:{x:0,y:a}},
+    {p:[{x:a,y:0},{x:s,y:0},{x:s,y:a}], d:{x:0,y:0}},
+    {p:[{x:s,y:a},{x:s,y:s},{x:b,y:s}], d:{x:-b,y:0}},
+    {p:[{x:b,y:s},{x:0,y:s},{x:0,y:b}], d:{x:a,y:-b}}
+  ];
+  T.forEach(tr=>{ const q=tr.p.map(p=>({x:p.x+tr.d.x*t,y:p.y+tr.d.y*t})); el('polygon',{points:P(q),class:'piece'},g); });
+  el('rect',{x:o,y:o,width:290,height:290,class:'bigsq'},g);
+  if (PIT.step===1){ el('rect',{x:o,y:o,width:290,height:290,fill:'none',stroke:'var(--c2)','stroke-width':5},g); }
+  text(g,{x:o+a*k/2,y:o+290+14},'a','lbl'); text(g,{x:o+(a+b/2)*k,y:o+290+14},'b','lbl');
+  text(g,{x:o-12,y:o+290-a*k/2},t>0.5?'a':'b','lbl'); text(g,{x:o-12,y:o+290-(t>0.5?(a+b/2):(b+a/2))*k},t>0.5?'b':'a','lbl');
+  const c1=text(g,X({x:s/2,y:s/2}),'c²','albl'); c1.setAttribute('opacity',(1-t).toFixed(3));
+  const c2=text(g,X({x:a/2,y:a/2}),'a²','albl'); c2.setAttribute('opacity',t.toFixed(3));
+  const c3=text(g,X({x:a+b/2,y:a+b/2}),'b²','albl'); c3.setAttribute('opacity',t.toFixed(3));
+}
+function panPit(){
+  const a=PIT.a,b=PIT.b,c=Math.hypot(a,b);
+  $('#pan-pit').innerHTML = eq('a² + b²', `${fmt(a*a,2)} + ${fmt(b*b,2)} = ${fmt(a*a+b*b,2)}`) + eq('c', fmt(c,4)) + eq('c²', fmt(c*c,4)) +
+    eq('área del cuadrado grande (a + b)²', fmt((a+b)**2,2)) + eq('4 · (ab / 2)', fmt(2*a*b,2)) +
+    `<div class="check">✓ c² = a² + b²</div>`;
+}
+function drawPit(){ drawPit1(); drawPit2(); panPit(); $('#pit-t').value=PIT.t; }
+function animateT(target){
+  cancelAnimationFrame(PIT.anim); const t0=PIT.t, start=performance.now(), dur=1300;
+  const stepf=now=>{ const u=Math.min(1,(now-start)/dur), e=u<.5?2*u*u:1-Math.pow(-2*u+2,2)/2; PIT.t=t0+(target-t0)*e; drawPit2(); $('#pit-t').value=PIT.t; if(u<1) PIT.anim=requestAnimationFrame(stepf); };
+  PIT.anim=requestAnimationFrame(stepf);
+}
+$('#pit-a').addEventListener('input',e=>{PIT.a=+e.target.value; $('#pit-a-v').textContent=PIT.a; drawPit();});
+$('#pit-b').addEventListener('input',e=>{PIT.b=+e.target.value; $('#pit-b-v').textContent=PIT.b; drawPit();});
+$('#pit-t').addEventListener('input',e=>{cancelAnimationFrame(PIT.anim); PIT.t=+e.target.value; drawPit2();});
+$('#pit-anim').addEventListener('click',()=>animateT(PIT.t<0.5?1:0));
+setupSteps('steps-pit',i=>{ PIT.step=i; if(i<=3){ if(PIT.t>0) animateT(0); } else animateT(1); drawPit1(); drawPit2(); });
+
+/* ============ LEY DE SENOS ============ */
+const SEN={pts:{A:{x:110,y:300},B:{x:430,y:300},C:{x:300,y:110}},step:0};
+function drawSen(){
+  const svg=$('#fig-senos'); svg.innerHTML=''; const g=el('g',{},svg); const P=SEN.pts, st=SEN.step, {A,B,C}=P;
+  const H=foot(C,A,B), O=circumcenter(A,B,C), R=V.dist(O,A), Bp={x:2*O.x-B.x,y:2*O.y-B.y};
+  if(st>=6){ el('circle',{cx:O.x,cy:O.y,r:R,class:'circ'},g); el('polygon',{points:poly([B,C,Bp]),class:'f4'},g); }
+  el('polygon',{points:poly([A,B,C]),class:'tri'},g);
+  if(st>=1){
+    extendIfOutside(g,H,A,B);
+    if(st===2) el('polygon',{points:poly([A,H,C]),class:'f1'},g);
+    if(st===3) el('polygon',{points:poly([B,H,C]),class:'f2'},g);
+    line(g,C,H,'aux'); rightMark(g,H,C,V.dist(H,A)>2?A:B);
+    dot(g,H); text(g,labelOff(H,C,16),'H','vlbl');
+    segLabel(g,C,H,V.dist(H,A)>2?A:B,'h','lbl',12);
+  }
+  if(st===2){ line(g,C,A,'hlline'); }
+  if(st===3){ line(g,C,B,'hlline'); }
+  if(st>=5){
+    const Ha=foot(A,B,C); extendIfOutside(g,Ha,B,C);
+    if(st===5) el('polygon',{points:poly([A,Ha,B]),class:'f3'},g);
+    line(g,A,Ha,'aux3'); rightMark(g,Ha,A,V.dist(Ha,B)>2?B:C); dot(g,Ha);
+    segLabel(g,A,Ha,V.dist(Ha,B)>2?B:C,"h'",'lbl',12);
+  }
+  if(st>=6){
+    line(g,B,Bp,'cline'); line(g,C,Bp,'cline'); rightMark(g,C,B,Bp); dot(g,O); dot(g,Bp);
+    text(g,labelOff(O,B,14),'O','vlbl'); text(g,labelOff(Bp,O,18),"B'",'vlbl');
+    arc(g,Bp,B,C,22,'arc hl');
+  }
+  triLabels(g,P,{A:(st===2||st===6)?'hl':'',B:st===3?'hl':(st===5?'hl3':''),C:st===5?'hl3':''});
+  drawHandles(svg,P);
+  const m=measures(P), r=R/UNIT;
+  $('#pan-sen').innerHTML = measTable(m) +
+    eq('a / sen A', fmt(m.a/sind(m.A),4)) + eq('b / sen B', fmt(m.b/sind(m.B),4)) + eq('c / sen C', fmt(m.c/sind(m.C),4)) +
+    eq('2R (diámetro circunscrito)', fmt(2*r,4)) +
+    eq('h = b · sen A', fmt(m.b*sind(m.A),4)) + eq('h = a · sen B', fmt(m.a*sind(m.B),4)) +
+    `<div class="check">✓ Las tres razones coinciden con 2R</div>` +
+    (Math.max(m.A,m.B)>90.05 ? `<div class="warn">Hay un ángulo obtuso en la base: el pie H de la altura cae fuera del lado AB.</div>`:'');
+}
+makeDraggable($('#fig-senos'),SEN.pts,drawSen);
+setupSteps('steps-sen',i=>{SEN.step=i; drawSen();});
+
+/* ============ LEY DE COSENOS ============ */
+const COS={pts:{A:{x:110,y:350},B:{x:460,y:350},C:{x:220,y:110}},step:0};
+function drawCos(){
+  const svg=$('#fig-cos'); svg.innerHTML=''; const g=el('g',{},svg); const P=COS.pts, st=COS.step, {A,B,C}=P;
+  const H=foot(C,A,B);
+  el('polygon',{points:poly([A,B,C]),class:'tri'},g);
+  if(st>=1){
+    extendIfOutside(g,H,A,B);
+    if(st===2) el('polygon',{points:poly([A,H,C]),class:'f1'},g);
+    if(st===3) el('polygon',{points:poly([B,H,C]),class:'f2'},g);
+    line(g,C,H,'aux'); rightMark(g,H,C,V.dist(H,A)>2?A:B);
+    dot(g,H); text(g,V.add(H,{x:16,y:-16}),'H','vlbl');
+    segLabel(g,C,H,V.dist(H,A)>2?A:B,'h','lbl',12);
+    // segmentos x y c − x, por debajo de la recta AB
+    const down=V.unit(V.perp(V.sub(B,A))); const s = V.dot(down,V.sub(C,A))>0 ? -1 : 1; const off=V.mul(down,s*26);
+    const A2=V.add(A,off), H2=V.add(H,off), B2=V.add(B,off);
+    line(g,A2,H2,'hlline'); line(g,H2,B2,'hlline3');
+    text(g,V.add(V.mid(A2,H2),V.mul(down,s*16)),'x','lbl'); text(g,V.add(V.mid(H2,B2),V.mul(down,s*16)),'c − x','lbl');
+  }
+  triLabels(g,P,{A:(st===2||st===5)?'hl':''});
+  drawHandles(svg,P);
+  const m=measures(P), x=m.b*cosd(m.A), h=m.b*sind(m.A);
+  $('#pan-cos').innerHTML = measTable(m) +
+    eq('x = b · cos A', fmt(x,4)) + eq('h² = b² − x²', fmt(h*h,4)) + eq('h² + (c − x)²', fmt(h*h+(m.c-x)**2,4)) +
+    eq('a²', fmt(m.a*m.a,4)) + eq('b² + c² − 2bc · cos A', fmt(m.b**2+m.c**2-2*m.b*m.c*cosd(m.A),4)) +
+    eq('b² + c² (Pitágoras «sin corregir»)', fmt(m.b**2+m.c**2,4)) +
+    `<div class="check">✓ a² = b² + c² − 2bc cos A</div>` +
+    `<div class="warn">${m.A>90.05?'A es obtuso: x &lt; 0 (H queda del otro lado de A) y a² &gt; b² + c².':(m.A<89.95?'A es agudo: x &gt; 0 y a² &lt; b² + c².':'A ≈ 90°: cos A ≈ 0 y se obtiene Pitágoras.')}</div>`;
+}
+makeDraggable($('#fig-cos'),COS.pts,drawCos);
+setupSteps('steps-cos',i=>{COS.step=i; drawCos();});
+
+/* ============ LEY DE TANGENTES ============ */
+const TAN={pts:{A:{x:50,y:420},B:{x:400,y:420},C:{x:260,y:300}},step:0};
+function drawTan(){
+  const svg=$('#fig-tan'); svg.innerHTML=''; const g=el('g',{},svg); const P=TAN.pts, st=TAN.step, {A,B,C}=P;
+  const a=V.dist(B,C), b=V.dist(C,A); const swap=a>b;
+  const L=swap?B:A, S=swap?A:B, sr=Math.min(a,b);          // L: extremo del lado mayor, S: del menor
+  const D=V.add(C,V.mul(V.unit(V.sub(L,C)),sr)), E=V.add(C,V.mul(V.unit(V.sub(C,L)),sr)), F=foot(L,E,S);
+  const equal=Math.abs(a-b)<2;
+  if(st>=1 && !equal){ el('circle',{cx:C.x,cy:C.y,r:sr,class:'circ'},g); line(g,C,E,'ext'); }
+  if(st===5 && !equal){ el('polygon',{points:poly([D,S,E]),class:'f1'},g); el('polygon',{points:poly([L,F,S]),class:'f2'},g); }
+  el('polygon',{points:poly([A,B,C]),class:'tri'},g);
+  if(st>=1 && !equal){
+    if(st===1){ line(g,L,D,'hlline'); line(g,D,E,'hlline3'); }
+    dot(g,D); dot(g,E);
+    text(g,V.add(D,V.mul(V.unit(V.perp(V.sub(L,C))), V.dot(V.perp(V.sub(L,C)),V.sub(S,C))>0?-16:16)),'D','vlbl');
+    text(g,labelOff(E,C,16),'E','vlbl');
+  }
+  if(st>=2 && !equal){
+    line(g,S,D,st===6?'hlline':'cline'); line(g,S,E,'cline'); rightMark(g,S,D,E,11);
+  }
+  if(st===3 && !equal){ arc(g,D,C,S,22,'arc hl'); arc(g,S,D,L,34,'arc hl3'); }
+  if(st>=4 && !equal){
+    line(g,S,F,'ext'); line(g,L,F,st===6?'hlline':'aux3'); rightMark(g,F,L,S,11); dot(g,F); text(g,labelOff(F,S,16),'F','vlbl');
+    if(st===4){ arc(g,L,S,F,30,'arc hl3'); arc(g,S,D,L,34,'arc hl3'); }
+  }
+  if(st===6 && !equal){ line(g,E,F,'ext'); }
+  triLabels(g,P,{});
+  drawHandles(svg,P);
+  const m=measures(P);
+  const lhs=(m.a-m.b)/(m.a+m.b), rhs=tand((m.A-m.B)/2)/tand((m.A+m.B)/2);
+  const lhs2=(m.b-m.c)/(m.b+m.c), rhs2=tand((m.B-m.C)/2)/tand((m.B+m.C)/2);
+  $('#pan-tan').innerHTML = measTable(m) +
+    eq('(a − b) / (a + b)', fmt(lhs,5)) + eq('tan((A − B)/2) / tan((A + B)/2)', fmt(rhs,5)) +
+    eq('(b − c) / (b + c)', fmt(lhs2,5)) + eq('tan((B − C)/2) / tan((B + C)/2)', fmt(rhs2,5)) +
+    `<div class="check">✓ Ambas razones coinciden</div>` +
+    (equal ? `<div class="warn">a ≈ b: el triángulo es isósceles, A ≈ B y ambos lados de la ley valen 0; la construcción no es necesaria.</div>` :
+      (swap ? `<div class="warn">Ahora a &gt; b: en la construcción se intercambian los papeles de A y B (la circunferencia tiene radio b y D está sobre el lado CB).</div>` : ''));
+}
+makeDraggable($('#fig-tan'),TAN.pts,drawTan);
+setupSteps('steps-tan',i=>{TAN.step=i; drawTan();});
+
+/* ============ CALCULADORA ============ */
+const KEYS=['a','b','c','A','B','C'];
+const F=x=>fmt(x,4);
+function readInputs(){
+  const d={}; for(const k of KEYS){ const inp=$('#in-'+k); if(inp.disabled){ d[k]=null; continue; }
+    const s=inp.value.trim().replace(',','.'); if(s===''){ d[k]=null; continue; } const v=Number(s); if(!isFinite(v)) return {error:`El dato ${k} no es un número válido.`}; d[k]=v; }
+  return d;
+}
+function err(msg){ return {error:msg}; }
+function solveRight(d){
+  const giv=['a','b','c','A','B'].filter(k=>d[k]!=null);
+  if(giv.length!==2) return err('Escriba exactamente <b>dos</b> datos (el ángulo recto \\(C=90^\\circ\\) ya es conocido). Al menos uno debe ser un lado.');
+  for(const k of ['a','b','c']) if(d[k]!=null && !(d[k]>0)) return err('Los lados deben ser números positivos.');
+  for(const k of ['A','B']) if(d[k]!=null && !(d[k]>0 && d[k]<90)) return err('En un triángulo rectángulo los ángulos \\(A\\) y \\(B\\) son agudos: deben estar entre \\(0^\\circ\\) y \\(90^\\circ\\).');
+  if(d.A!=null && d.B!=null) return err('Con dos ángulos agudos hay infinitos triángulos semejantes: se necesita al menos un lado.');
+  const st=[]; let {a,b,c,A,B}=d; let caso;
+  const nsides=['a','b','c'].filter(k=>d[k]!=null).length;
+  if(nsides===2){
+    caso='Triángulo rectángulo: se conocen dos lados';
+    if(a!=null && b!=null){
+      c=Math.hypot(a,b);
+      st.push(`Pitágoras: \\(c=\\sqrt{a^2+b^2}=\\sqrt{${F(a)}^2+${F(b)}^2}=${F(c)}\\).`);
+      A=deg(Math.atan(a/b)); st.push(`\\(\\tan A=\\dfrac{a}{b}=\\dfrac{${F(a)}}{${F(b)}}=${F(a/b)}\\ \\Rightarrow\\ A=\\tan^{-1}(${F(a/b)})=${F(A)}^\\circ\\).`);
+    } else if(a!=null){
+      if(c<=a) return err('La hipotenusa \\(c\\) debe ser mayor que cualquier cateto.');
+      b=Math.sqrt(c*c-a*a); st.push(`Pitágoras: \\(b=\\sqrt{c^2-a^2}=\\sqrt{${F(c)}^2-${F(a)}^2}=${F(b)}\\).`);
+      A=asind(a/c); st.push(`\\(\\sen A=\\dfrac{a}{c}=\\dfrac{${F(a)}}{${F(c)}}=${F(a/c)}\\ \\Rightarrow\\ A=${F(A)}^\\circ\\).`);
+    } else {
+      if(c<=b) return err('La hipotenusa \\(c\\) debe ser mayor que cualquier cateto.');
+      a=Math.sqrt(c*c-b*b); st.push(`Pitágoras: \\(a=\\sqrt{c^2-b^2}=\\sqrt{${F(c)}^2-${F(b)}^2}=${F(a)}\\).`);
+      A=acosd(b/c); st.push(`\\(\\cos A=\\dfrac{b}{c}=\\dfrac{${F(b)}}{${F(c)}}=${F(b/c)}\\ \\Rightarrow\\ A=${F(A)}^\\circ\\).`);
+    }
+    B=90-A; st.push(`Ángulos agudos complementarios: \\(B=90^\\circ-A=${F(B)}^\\circ\\).`);
+  } else {
+    caso='Triángulo rectángulo: se conocen un lado y un ángulo agudo';
+    if(A==null){ A=90-B; st.push(`Ángulos agudos complementarios: \\(A=90^\\circ-B=90^\\circ-${F(B)}^\\circ=${F(A)}^\\circ\\).`); }
+    else { B=90-A; st.push(`Ángulos agudos complementarios: \\(B=90^\\circ-A=90^\\circ-${F(A)}^\\circ=${F(B)}^\\circ\\).`); }
+    if(a!=null){
+      b=a/tand(A); c=a/sind(A);
+      st.push(`\\(\\tan A=\\dfrac{a}{b}\\Rightarrow b=\\dfrac{a}{\\tan A}=\\dfrac{${F(a)}}{\\tan ${F(A)}^\\circ}=${F(b)}\\).`);
+      st.push(`\\(\\sen A=\\dfrac{a}{c}\\Rightarrow c=\\dfrac{a}{\\sen A}=\\dfrac{${F(a)}}{\\sen ${F(A)}^\\circ}=${F(c)}\\).`);
+    } else if(b!=null){
+      a=b*tand(A); c=b/cosd(A);
+      st.push(`\\(\\tan A=\\dfrac{a}{b}\\Rightarrow a=b\\tan A=${F(b)}\\tan ${F(A)}^\\circ=${F(a)}\\).`);
+      st.push(`\\(\\cos A=\\dfrac{b}{c}\\Rightarrow c=\\dfrac{b}{\\cos A}=\\dfrac{${F(b)}}{\\cos ${F(A)}^\\circ}=${F(c)}\\).`);
+    } else {
+      a=c*sind(A); b=c*cosd(A);
+      st.push(`\\(\\sen A=\\dfrac{a}{c}\\Rightarrow a=c\\,\\sen A=${F(c)}\\,\\sen ${F(A)}^\\circ=${F(a)}\\).`);
+      st.push(`\\(\\cos A=\\dfrac{b}{c}\\Rightarrow b=c\\cos A=${F(c)}\\cos ${F(A)}^\\circ=${F(b)}\\).`);
+    }
+    st.push(`Comprobación con Pitágoras: \\(a^2+b^2=${F(a*a+b*b)}\\approx c^2=${F(c*c)}\\).`);
+  }
+  return {caso,steps:st,sols:[{a,b,c,A,B,C:90}]};
+}
+function solveOblique(d){
+  const S=['a','b','c'], gs=S.filter(k=>d[k]!=null), ga=['A','B','C'].filter(k=>d[k]!=null);
+  if(gs.length+ga.length!==3) return err('Escriba exactamente <b>tres</b> datos, y al menos uno debe ser un lado.');
+  for(const k of gs) if(!(d[k]>0)) return err('Los lados deben ser números positivos.');
+  for(const k of ga) if(!(d[k]>0 && d[k]<180)) return err('Cada ángulo debe estar entre \\(0^\\circ\\) y \\(180^\\circ\\).');
+  if(gs.length===0) return err('Con tres ángulos (AAA) hay infinitos triángulos semejantes: se necesita al menos un lado.');
+  const sumA=ga.reduce((s,k)=>s+d[k],0); if(sumA>=180) return err('La suma de los ángulos dados debe ser menor que \\(180^\\circ\\).');
+  const U=k=>k.toUpperCase(), Lw=k=>k.toLowerCase(); const st=[]; let caso, sols=[], note='';
+  if(gs.length===3){
+    caso='LLL: se conocen los tres lados';
+    const {a,b,c}=d;
+    if(a+b<=c||a+c<=b||b+c<=a) return err('No se cumple la desigualdad del triángulo: cada lado debe ser menor que la suma de los otros dos.');
+    const cA=(b*b+c*c-a*a)/(2*b*c), A=acosd(cA), cB=(a*a+c*c-b*b)/(2*a*c), B=acosd(cB), C=180-A-B;
+    st.push(`Ley de cosenos para \\(A\\): \\(\\cos A=\\dfrac{b^2+c^2-a^2}{2bc}=\\dfrac{${F(b)}^2+${F(c)}^2-${F(a)}^2}{2(${F(b)})(${F(c)})}=${F(cA)}\\ \\Rightarrow\\ A=${F(A)}^\\circ\\).`);
+    st.push(`Ley de cosenos para \\(B\\): \\(\\cos B=\\dfrac{a^2+c^2-b^2}{2ac}=\\dfrac{${F(a)}^2+${F(c)}^2-${F(b)}^2}{2(${F(a)})(${F(c)})}=${F(cB)}\\ \\Rightarrow\\ B=${F(B)}^\\circ\\).`);
+    st.push(`Suma de ángulos interiores: \\(C=180^\\circ-A-B=${F(C)}^\\circ\\).`);
+    sols=[{a,b,c,A,B,C}];
+  } else if(gs.length===2){
+    const m=S.find(k=>d[k]==null), M=U(m);
+    if(d[M]!=null){
+      caso='LAL: dos lados y el ángulo comprendido';
+      const [p,q]=S.filter(k=>k!==m), vp=d[p], vq=d[q], vM=d[M]; const P=U(p), Q=U(q);
+      const vm=Math.sqrt(vp*vp+vq*vq-2*vp*vq*cosd(vM));
+      st.push(`Ley de cosenos: \\(${m}^2=${p}^2+${q}^2-2${p}${q}\\cos ${M}=${F(vp)}^2+${F(vq)}^2-2(${F(vp)})(${F(vq)})\\cos ${F(vM)}^\\circ=${F(vm*vm)}\\ \\Rightarrow\\ ${m}=${F(vm)}\\).`);
+      const cP=(vq*vq+vm*vm-vp*vp)/(2*vq*vm), vP=acosd(cP);
+      st.push(`Ley de cosenos para \\(${P}\\): \\(\\cos ${P}=\\dfrac{${q}^2+${m}^2-${p}^2}{2${q}${m}}=${F(cP)}\\ \\Rightarrow\\ ${P}=${F(vP)}^\\circ\\). (Se usa la ley de cosenos y no la de senos para no confundir un ángulo obtuso con su suplemento.)`);
+      const vQ=180-vM-vP; st.push(`Suma de ángulos: \\(${Q}=180^\\circ-${M}-${P}=${F(vQ)}^\\circ\\).`);
+      const s={}; s[m]=vm; s[p]=vp; s[q]=vq; s[M]=vM; s[P]=vP; s[Q]=vQ; sols=[s];
+    } else {
+      caso='LLA: dos lados y un ángulo no comprendido (caso ambiguo)';
+      const X=ga[0], x=Lw(X), y=gs.find(k=>k!==x), Y=U(y), z=m, Z=M;
+      const vx=d[x], vy=d[y], vX=d[X]; const sY=vy*sind(vX)/vx;
+      st.push(`Ley de senos: \\(\\dfrac{\\sen ${Y}}{${y}}=\\dfrac{\\sen ${X}}{${x}}\\ \\Rightarrow\\ \\sen ${Y}=\\dfrac{${y}\\,\\sen ${X}}{${x}}=\\dfrac{${F(vy)}\\,\\sen ${F(vX)}^\\circ}{${F(vx)}}=${F(sY)}\\).`);
+      if(sY>1+1e-12){ st.push(`Como \\(\\sen ${Y}>1\\), <b>no existe ningún triángulo</b> con estos datos: el lado \\(${x}\\) es demasiado corto para alcanzar el otro lado.`); return {caso,steps:st,sols:[],note:'Sin solución.'}; }
+      const Y1=asind(Math.min(1,sY)), cands=[Y1]; if(Y1<90-1e-9) cands.push(180-Y1);
+      if(cands.length===2) st.push(`El seno es positivo en el primer y segundo cuadrante, así que hay dos candidatos: \\(${Y}_1=\\sen^{-1}(${F(sY)})=${F(Y1)}^\\circ\\) y \\(${Y}_2=180^\\circ-${F(Y1)}^\\circ=${F(180-Y1)}^\\circ\\).`);
+      else st.push(`\\(\\sen ${Y}=1\\Rightarrow ${Y}=90^\\circ\\): solución única (triángulo rectángulo).`);
+      cands.forEach((vY,i)=>{
+        const lab=cands.length===2?`_${i+1}`:'';
+        if(vX+vY>=180-1e-9){ st.push(`Candidato \\(${Y}${lab}=${F(vY)}^\\circ\\): se descarta porque \\(${X}+${Y}${lab}=${F(vX+vY)}^\\circ\\ge 180^\\circ\\).`); return; }
+        const vZ=180-vX-vY, vz=vx*sind(vZ)/sind(vX);
+        st.push(`Con \\(${Y}${lab}=${F(vY)}^\\circ\\): \\(${Z}=180^\\circ-${X}-${Y}=${F(vZ)}^\\circ\\) y, por ley de senos, \\(${z}=\\dfrac{${x}\\,\\sen ${Z}}{\\sen ${X}}=\\dfrac{${F(vx)}\\,\\sen ${F(vZ)}^\\circ}{\\sen ${F(vX)}^\\circ}=${F(vz)}\\).`);
+        const s={}; s[x]=vx; s[y]=vy; s[z]=vz; s[X]=vX; s[Y]=vY; s[Z]=vZ; sols.push(s);
+      });
+      note = sols.length===2 ? '<b>Hay dos triángulos distintos</b> que cumplen los datos.' : (sols.length===1?'Hay una sola solución.':'Sin solución.');
+    }
+  } else {
+    const x=gs[0], X=U(x); const known=ga.slice(); const miss=['A','B','C'].find(k=>!known.includes(k));
+    caso = known.includes(X) ? 'LAA: un lado, su ángulo opuesto y otro ángulo' : 'ALA: un lado y los dos ángulos adyacentes';
+    const s={}; for(const k of known) s[k]=d[k]; s[miss]=180-known.reduce((t,k)=>t+d[k],0);
+    st.push(`Suma de ángulos interiores: \\(${miss}=180^\\circ-${known[0]}-${known[1]}=${F(s[miss])}^\\circ\\).`);
+    s[x]=d[x]; const kk=d[x]/sind(s[X]);
+    st.push(`Ley de senos: \\(\\dfrac{${x}}{\\sen ${X}}=\\dfrac{${F(d[x])}}{\\sen ${F(s[X])}^\\circ}=${F(kk)}\\) (esta razón es \\(2R\\)).`);
+    for(const y of S.filter(k=>k!==x)){ const Y=U(y); s[y]=kk*sind(s[Y]); st.push(`\\(${y}=${F(kk)}\\,\\sen ${Y}=${F(kk)}\\,\\sen ${F(s[Y])}^\\circ=${F(s[y])}\\).`); }
+    sols=[s];
+  }
+  return {caso,steps:st,sols,note};
+}
+function classify(s){
+  const e=1e-6, sides=[s.a,s.b,s.c], eqs=(x,y)=>Math.abs(x-y)<=e*Math.max(x,y);
+  const bySides = eqs(s.a,s.b)&&eqs(s.b,s.c)?'equilátero':(eqs(s.a,s.b)||eqs(s.b,s.c)||eqs(s.a,s.c)?'isósceles':'escaleno');
+  const mx=Math.max(s.A,s.B,s.C); const byAng = Math.abs(mx-90)<1e-6?'rectángulo':(mx>90?'obtusángulo':'acutángulo');
+  return [bySides,byAng];
+}
+function drawSol(svg,s){
+  svg.innerHTML=''; const W=380,H=260,pad=40;
+  const p0={x:0,y:0}, p1={x:s.c,y:0}, p2={x:s.b*cosd(s.A),y:s.b*sind(s.A)};
+  const xs=[p0.x,p1.x,p2.x], ys=[p0.y,p1.y,p2.y], minx=Math.min(...xs), maxx=Math.max(...xs), miny=Math.min(...ys), maxy=Math.max(...ys);
+  const k=Math.min((W-2*pad)/(maxx-minx),(H-2*pad)/(maxy-miny||1));
+  const ox=(W-(maxx-minx)*k)/2, oy=(H-(maxy-miny)*k)/2;
+  const T=p=>({x:ox+(p.x-minx)*k, y:H-oy-(p.y-miny)*k});
+  const A=T(p0),B=T(p1),C=T(p2); const g=el('g',{},svg); const G={x:(A.x+B.x+C.x)/3,y:(A.y+B.y+C.y)/3};
+  el('polygon',{points:poly([A,B,C]),class:'solfill'},g);
+  const r=Math.max(14,Math.min(30,Math.min(V.dist(A,B),V.dist(B,C),V.dist(C,A))/3.5));
+  const COL=['var(--c1)','var(--c2)','var(--c3)'], FIL=['var(--f1)','var(--f2)','var(--f3)'];
+  // ángulo A (color de a), B (color de b), C (color de c): sector relleno + arco
+  [[A,B,C,s.A],[B,C,A,s.B],[C,A,B,s.C]].forEach(([Q,P1,P2,ang],i)=>{
+    const u=V.unit(V.sub(P1,Q)), w=V.unit(V.sub(P2,Q));
+    if(Math.abs(ang-90)<1e-6){
+      const s1=V.add(Q,V.mul(u,14)), s2=V.add(s1,V.mul(w,14)), s3=V.add(Q,V.mul(w,14));
+      el('path',{d:`M${Q.x} ${Q.y} L${s1.x} ${s1.y} L${s2.x} ${s2.y} L${s3.x} ${s3.y} Z`,fill:FIL[i],stroke:COL[i],'stroke-width':2},g);
+      return;
+    }
+    const t1=Math.atan2(u.y,u.x); let d=Math.atan2(w.y,w.x)-t1; while(d<=-Math.PI) d+=2*Math.PI; while(d>Math.PI) d-=2*Math.PI;
+    const p1={x:Q.x+r*Math.cos(t1),y:Q.y+r*Math.sin(t1)}, p2={x:Q.x+r*Math.cos(t1+d),y:Q.y+r*Math.sin(t1+d)};
+    el('path',{d:`M${Q.x} ${Q.y} L${p1.x} ${p1.y} A${r} ${r} 0 0 ${d>0?1:0} ${p2.x} ${p2.y} Z`,fill:FIL[i],stroke:'none'},g);
+    el('path',{d:`M${p1.x} ${p1.y} A${r} ${r} 0 0 ${d>0?1:0} ${p2.x} ${p2.y}`,fill:'none',stroke:COL[i],'stroke-width':2.4},g);
+  });
+  line(g,B,C,'side sa'); line(g,C,A,'side sb'); line(g,A,B,'side sc');
+  const lab=(P,Q,away,s,i)=>{ const m=V.mid(P,Q); let n=V.unit(V.perp(V.sub(Q,P))); if(V.dot(n,V.sub(away,m))>0) n=V.mul(n,-1);
+    const t=text(g,V.add(m,V.mul(n,16)),s,'slbl'); t.setAttribute('style',`fill:${COL[i]};font-weight:700;font-size:15px`); };
+  lab(B,C,A,'a = '+fmt(s.a,3),0); lab(C,A,B,'b = '+fmt(s.b,3),1); lab(A,B,C,'c = '+fmt(s.c,3),2);
+  [[A,'A',0],[B,'B',1],[C,'C',2]].forEach(([P,nm,i])=>{ el('circle',{cx:P.x,cy:P.y,r:4,fill:COL[i]},g); const t=text(g,labelOff(P,G,19),nm,'vlbl'); t.setAttribute('style',`fill:${COL[i]}`); });
+}
+function renderResult(res){
+  const out=$('#calc-out'); out.innerHTML='';
+  if(res.error){ out.innerHTML=`<div class="alert">${res.error}</div>`; tex(out); return; }
+  let h=`<p class="caso">${res.caso}</p><h4>Procedimiento</h4><ol class="calc">${res.steps.map(s=>`<li>${s}</li>`).join('')}</ol>`;
+  if(res.note) h+=`<p>${res.note}</p>`;
+  h+='<div class="sols">';
+  res.sols.forEach((s,i)=>{
+    const [cs,ca]=classify(s), sp=(s.a+s.b+s.c)/2, area=0.5*s.b*s.c*sind(s.A), R=s.a/(2*sind(s.A)), rin=area/sp;
+    h+=`<div class="card" style="padding:10px 12px">${res.sols.length>1?`<h4>Solución ${i+1}</h4>`:'<h4>Resultado</h4>'}
+      <svg class="fig" id="sol-${i}" viewBox="0 0 380 260"></svg>
+      <table class="vals">
+        <tr><th>Lados</th><td class="ka"><i>a</i> = ${F(s.a)}</td><td class="kb"><i>b</i> = ${F(s.b)}</td><td class="kc"><i>c</i> = ${F(s.c)}</td></tr>
+        <tr><th>Ángulos</th><td class="ka"><i>A</i> = ${F(s.A)}°</td><td class="kb"><i>B</i> = ${F(s.B)}°</td><td class="kc"><i>C</i> = ${F(s.C)}°</td></tr>
+      </table>
+      <p class="hint" style="margin:6px 0 0">Cada lado tiene el color de su ángulo opuesto.</p>
+      <table class="vals" style="display:none">
+      </table>
+      <div style="margin-top:8px">${eq('Perímetro', F(2*sp))}${eq('Área = ½ bc sen A', F(area))}${eq('Radio circunscrito R = a / (2 sen A)', F(R))}${eq('Radio inscrito r = Área / s', F(rin))}</div>
+      <p style="margin:8px 0 0"><span class="tag">${cs}</span><span class="tag">${ca}</span></p></div>`;
+  });
+  h+='</div>';
+  out.innerHTML=h;
+  res.sols.forEach((s,i)=>drawSol(document.getElementById('sol-'+i),s));
+  tex(out);
+}
+function mode(){ return document.querySelector('input[name=modo]:checked').value; }
+function setMode(m){
+  document.querySelector(`input[name=modo][value=${m}]`).checked=true;
+  const r = m==='rect';
+  $('#in-C').disabled=r; $('#in-C').value= r?'90':'';
+  $('#sm-a').textContent=r?'cateto':'lado'; $('#sm-b').textContent=r?'cateto':'lado'; $('#sm-c').textContent=r?'hipotenusa':'lado';
+  $('#sm-A').textContent=r?'agudo':'ángulo'; $('#sm-B').textContent=r?'agudo':'ángulo'; $('#sm-C').textContent=r?'ángulo recto':'ángulo';
+  $('#calc-help').innerHTML = r ? 'Triángulo rectángulo en \\(C\\) (hipotenusa \\(c\\)). Escriba <b>dos</b> datos, al menos uno de ellos un lado, y deje vacíos los demás. Ángulos en grados.'
+                               : 'Escriba <b>tres</b> datos (al menos un lado) y deje vacíos los demás. La calculadora identifica el caso: LLL, LAL, ALA, LAA o LLA (ambiguo). Ángulos en grados.';
+  tex($('#calc-help'));
+}
+document.querySelectorAll('input[name=modo]').forEach(r=>r.addEventListener('change',()=>{ setMode(mode()); for(const k of KEYS) if(!$('#in-'+k).disabled) $('#in-'+k).value=''; }));
+$('#calc-go').addEventListener('click',()=>{ const d=readInputs(); if(d.error) return renderResult(d); renderResult(mode()==='rect'?solveRight(d):solveOblique(d)); });
+$('#calc-clear').addEventListener('click',()=>{ for(const k of KEYS) if(!$('#in-'+k).disabled) $('#in-'+k).value=''; $('#calc-out').innerHTML='<p class="startmsg">Aquí aparecerán el procedimiento, los resultados y la figura del triángulo.</p>'; });
+document.querySelectorAll('.fields input').forEach(i=>i.addEventListener('keydown',e=>{ if(e.key==='Enter') $('#calc-go').click(); }));
+const EJ=[
+  ['Rectángulo','Dos catetos: a = 3, b = 4','rect',{a:3,b:4}],
+  ['Rectángulo','Cateto e hipotenusa: b = 7, c = 25','rect',{b:7,c:25}],
+  ['Rectángulo','Hipotenusa y ángulo: c = 10, A = 30°','rect',{c:10,A:30}],
+  ['Rectángulo','Cateto y ángulo: a = 5, B = 40°','rect',{a:5,B:40}],
+  ['Oblicuángulo','LLL: a = 7, b = 8, c = 9','obl',{a:7,b:8,c:9}],
+  ['Oblicuángulo','LAL: b = 5, c = 7, A = 49°','obl',{b:5,c:7,A:49}],
+  ['Oblicuángulo','ALA: c = 10, A = 40°, B = 60°','obl',{c:10,A:40,B:60}],
+  ['Oblicuángulo','LAA: a = 8, A = 35°, B = 75°','obl',{a:8,A:35,B:75}],
+  ['Oblicuángulo','LLA con dos soluciones: a = 6, b = 10, A = 30°','obl',{a:6,b:10,A:30}],
+  ['Oblicuángulo','LLA con una solución: a = 12, b = 10, A = 30°','obl',{a:12,b:10,A:30}],
+  ['Oblicuángulo','LLA sin solución: a = 3, b = 10, A = 30°','obl',{a:3,b:10,A:30}]
+];
+(function(){
+  const sel=$('#calc-ej'); sel.innerHTML='<option value="">Cargar un ejemplo…</option>';
+  let grp=null, last='';
+  EJ.forEach((e,i)=>{ if(e[0]!==last){ grp=document.createElement('optgroup'); grp.label=e[0]; sel.appendChild(grp); last=e[0]; } const o=document.createElement('option'); o.value=i; o.textContent=e[1]; grp.appendChild(o); });
+  sel.addEventListener('change',()=>{ if(sel.value==='') return; const e=EJ[+sel.value]; setMode(e[2]); for(const k of KEYS) if(!$('#in-'+k).disabled) $('#in-'+k).value = e[3][k]!=null ? e[3][k] : ''; $('#calc-go').click(); sel.value=''; });
+})();
+
+/* ============ pestañas ============ */
+function openTab(id){
+  if(!document.getElementById(id)) id='pitagoras';
+  document.querySelectorAll('section.tab').forEach(s=>s.classList.toggle('active',s.id===id));
+  document.querySelectorAll('nav.tabs button').forEach(b=>b.setAttribute('aria-selected',b.dataset.tab===id));
+}
+document.querySelector('nav.tabs').addEventListener('click',e=>{ const id=e.target.dataset && e.target.dataset.tab; if(!id) return; openTab(id); history.replaceState(null,'','#'+id); });
+openTab(location.hash.slice(1));
+
+
+/* ============ copiar cita ============ */
+document.getElementById('copiar-cita').addEventListener('click',async()=>{
+  const t=document.getElementById('cita-apa').innerText.trim(), ok=document.getElementById('cita-ok');
+  try{ await navigator.clipboard.writeText(t); ok.textContent=' Cita copiada.'; }
+  catch(e){ const r=document.createRange(); r.selectNodeContents(document.getElementById('cita-apa')); const s=getSelection(); s.removeAllRanges(); s.addRange(r); ok.textContent=' Cita seleccionada: use Ctrl+C para copiarla.'; }
+});
+/* ============ inicio ============ */
+drawPit(); drawSen(); drawCos(); drawTan(); setMode('rect');
+window.addEventListener('DOMContentLoaded',()=>{ tex(document.body); });
+</script>
+</body>
+</html>

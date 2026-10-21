@@ -1,0 +1,40 @@
+cff-version: 1.2.0
+message: "Si utiliza este material, cítelo como se indica a continuación."
+type: software
+title: "Teoremas del triángulo: demostraciones interactivas de Pitágoras, ley de senos, ley de cosenos y ley de tangentes, con calculadora de triángulos"
+version: 1.0.0
+doi: 10.5281/zenodo.23540537
+date-released: 2026-10-21
+license: CC-BY-NC-SA-4.0
+url: "https://daliacastillo.github.io/teoremas-del-triangulo/"
+repository-code: "https://github.com/daliacastillo/teoremas-del-triangulo"
+authors:
+  - family-names: "Castillo Márquez"
+    given-names: "Dalia Imelda"
+    orcid: "https://orcid.org/0000-0002-5890-0437"
+    affiliation: "Universidad Autónoma de Nayarit, Unidad Académica de Ciencias Básicas e Ingenierías"
+keywords:
+  - trigonometría
+  - teorema de Pitágoras
+  - ley de senos
+  - ley de cosenos
+  - ley de tangentes
+  - resolución de triángulos
+  - demostración matemática
+  - geometría dinámica
+  - material didáctico interactivo
+  - enseñanza de las matemáticas
+preferred-citation:
+  type: generic
+  title: "Teoremas del triángulo: demostraciones interactivas de Pitágoras, ley de senos, ley de cosenos y ley de tangentes, con calculadora de triángulos"
+  version: "1.0"
+  year: 2026
+  medium: "Material didáctico interactivo"
+  publisher:
+    name: "Zenodo"
+  doi: 10.5281/zenodo.23540537
+  url: "https://daliacastillo.github.io/teoremas-del-triangulo/"
+  authors:
+    - family-names: "Castillo Márquez"
+      given-names: "Dalia Imelda"
+      orcid: "https://orcid.org/0000-0002-5890-0437"
